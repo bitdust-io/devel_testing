@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  identity-server:
+    build: Dockerfiles/Identity/.
+
+  stun_1:
+    build: Dockerfiles/Stun/.
+    links:
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+
+  dht_seed_1:
+    build: Dockerfiles/DHT/.
+#    links:
+#      - "dht_seed_1:dht_seed_1"
+#      - "dht_seed_2:dht_seed_2"
+  dht_seed_2:
+    build: Dockerfiles/DHT/.
+#    links:
+#      - "dht_seed_1:dht_seed_1"
+#      - "dht_seed_2:dht_seed_2"
+
+  supplier_1:
+    build: Dockerfiles/Node/.
+    links:
+      - "identity-server:is"
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+
+  supplier_2:
+    build: Dockerfiles/Node/.
+    links:
+      - "identity-server:is"
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+
+
+  test:
+    build: Dockerfiles/Test/.
+    links:
+      - "supplier_1:supplier_1"
+      - "supplier_2:supplier_2"
