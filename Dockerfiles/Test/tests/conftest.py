@@ -5,43 +5,87 @@ import time
 
 @pytest.yield_fixture(scope='session', autouse=True)
 def timeout_before_tests_to_activate_bitdust():
-    # Code that will run before your test, for example:
+    print('timeout_before_tests_to_activate_bitdust before')
     time.sleep(20)
-    # A test function will be run at this point
     yield
-    # Code that will run after your test, for example:
-    # files_after = # ... do something to check the existing files
-    # assert files_before == files_after
+    print('timeout_before_tests_to_activate_bitdust after')
 
 
 @pytest.fixture(scope='session', autouse=True)
-def identity_create():
-    time.sleep(20)
-    response = requests.post('http://supplier_1:8180/identity/create/v1', json={'username': 'identity_node1'})
+def supplier_1_init(timeout_before_tests_to_activate_bitdust):
+    response = requests.post('http://supplier_1:8180/identity/create/v1', json={'username': 'supplier_1'})
 
     assert response.status_code == 200
-    print("supplier_1", response.content)
+    assert response.json()['status'] == 'OK'
 
     response = requests.get('http://supplier_1:8180/network/connected/v1?wait_timeout=5')
+    assert response.json()['status'] == 'ERROR'
 
-    print("supplier_1", response.status_code)
-    print("supplier_1", response.content)
-    #
-    # response = requests.post('http://supplier_2:8180/identity/create/v1', json={'username': 'identity_node2'})
-    #
-    # assert response.status_code == 200
-    # print("supplier_2", response.content)
+    for i in range(5):
+        response = requests.get('http://supplier_1:8180/network/connected/v1?wait_timeout=5')
+        if response.json()['status'] == 'OK':
+            break
+
+        time.sleep(1)
+    else:
+        assert False
 
 
 @pytest.fixture(scope='session', autouse=True)
-def identity_create_2():
-    time.sleep(20)
-    response = requests.post('http://supplier_2:8180/identity/create/v1', json={'username': 'identity_node2'})
+def supplier_2_init(timeout_before_tests_to_activate_bitdust):
+    response = requests.post('http://supplier_2:8180/identity/create/v1', json={'username': 'supplier_2'})
 
     assert response.status_code == 200
-    print("supplier_2", response.content)
+    assert response.json()['status'] == 'OK'
 
     response = requests.get('http://supplier_2:8180/network/connected/v1?wait_timeout=5')
+    assert response.json()['status'] == 'ERROR'
 
-    print("supplier_2", response.status_code)
-    print("supplier_2", response.content)
+    for i in range(5):
+        response = requests.get('http://supplier_2:8180/network/connected/v1?wait_timeout=5')
+        if response.json()['status'] == 'OK':
+            break
+
+        time.sleep(1)
+    else:
+        assert False
+
+
+@pytest.fixture(scope='session', autouse=True)
+def proxy_server_1_init(timeout_before_tests_to_activate_bitdust):
+    response = requests.post('http://proxy_server_1:8180/identity/create/v1', json={'username': 'proxy_server_1'})
+
+    assert response.status_code == 200
+    assert response.json()['status'] == 'OK'
+
+    response = requests.get('http://proxy_server_1:8180/network/connected/v1?wait_timeout=5')
+    assert response.json()['status'] == 'ERROR'
+
+    for i in range(5):
+        response = requests.get('http://proxy_server_1:8180/network/connected/v1?wait_timeout=5')
+        if response.json()['status'] == 'OK':
+            break
+
+        time.sleep(1)
+    else:
+        assert False
+
+
+@pytest.fixture(scope='session', autouse=True)
+def proxy_server_2_init(timeout_before_tests_to_activate_bitdust):
+    response = requests.post('http://proxy_server_2:8180/identity/create/v1', json={'username': 'proxy_server_2'})
+
+    assert response.status_code == 200
+    assert response.json()['status'] == 'OK'
+
+    response = requests.get('http://proxy_server_2:8180/network/connected/v1?wait_timeout=5')
+    assert response.json()['status'] == 'ERROR'
+
+    for i in range(5):
+        response = requests.get('http://proxy_server_2:8180/network/connected/v1?wait_timeout=5')
+        if response.json()['status'] == 'OK':
+            break
+
+        time.sleep(1)
+    else:
+        assert False

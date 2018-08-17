@@ -7,6 +7,4 @@ WORKDIR /app
 
 ADD tests /app/tests
 
-#ENTRYPOINT ["sleep", "100000"]
-
-ENTRYPOINT ["pytest", "tests/", "-v", "--pdb", "-s"]
+ENTRYPOINT ["pytest", "tests/", "-v", "-s"]

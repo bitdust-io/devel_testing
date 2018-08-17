@@ -12,16 +12,18 @@ services:
 
   dht_seed_1:
     build: Dockerfiles/DHT/.
-#    links:
-#      - "dht_seed_1:dht_seed_1"
-#      - "dht_seed_2:dht_seed_2"
+
   dht_seed_2:
     build: Dockerfiles/DHT/.
-#    links:
-#      - "dht_seed_1:dht_seed_1"
-#      - "dht_seed_2:dht_seed_2"
 
   proxy_server_1:
+    build: Dockerfiles/Proxy-Server/.
+    links:
+      - "identity-server:is"
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+
+  proxy_server_2:
     build: Dockerfiles/Proxy-Server/.
     links:
       - "identity-server:is"
@@ -42,9 +44,11 @@ services:
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
-
+  #: test unit
   test:
     build: Dockerfiles/Test/.
     links:
       - "supplier_1:supplier_1"
       - "supplier_2:supplier_2"
+      - "proxy_server_1:proxy_server_1"
+      - "proxy_server_2:proxy_server_2"
