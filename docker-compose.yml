@@ -21,6 +21,13 @@ services:
 #      - "dht_seed_1:dht_seed_1"
 #      - "dht_seed_2:dht_seed_2"
 
+  proxy_server_1:
+    build: Dockerfiles/Proxy-Server/.
+    links:
+      - "identity-server:is"
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+
   supplier_1:
     build: Dockerfiles/Node/.
     links:

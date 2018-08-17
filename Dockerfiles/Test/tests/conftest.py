@@ -16,10 +16,15 @@ def timeout_before_tests_to_activate_bitdust():
 
 @pytest.fixture(scope='session', autouse=True)
 def identity_create():
-    # time.sleep(20)
+    time.sleep(20)
     response = requests.post('http://supplier_1:8180/identity/create/v1', json={'username': 'identity_node1'})
 
     assert response.status_code == 200
+    print("supplier_1", response.content)
+
+    response = requests.get('http://supplier_1:8180/network/connected/v1?wait_timeout=5')
+
+    print("supplier_1", response.status_code)
     print("supplier_1", response.content)
     #
     # response = requests.post('http://supplier_2:8180/identity/create/v1', json={'username': 'identity_node2'})
@@ -30,7 +35,13 @@ def identity_create():
 
 @pytest.fixture(scope='session', autouse=True)
 def identity_create_2():
+    time.sleep(20)
     response = requests.post('http://supplier_2:8180/identity/create/v1', json={'username': 'identity_node2'})
 
     assert response.status_code == 200
+    print("supplier_2", response.content)
+
+    response = requests.get('http://supplier_2:8180/network/connected/v1?wait_timeout=5')
+
+    print("supplier_2", response.status_code)
     print("supplier_2", response.content)
