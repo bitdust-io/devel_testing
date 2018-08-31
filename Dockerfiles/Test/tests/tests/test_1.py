@@ -40,5 +40,3 @@ def test_ping_supplier_1_towards_supplier_2():
 
     assert response.status_code == 200
     print(response.content)
-
-    assert False
