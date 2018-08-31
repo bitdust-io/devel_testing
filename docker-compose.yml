@@ -2,43 +2,58 @@ version: "3"
 
 services:
   identity-server:
-    build: Dockerfiles/Identity/.
-
+    build:
+      dockerfile: ./Dockerfiles/Identity/Dockerfile
+      context: ./
   stun_1:
-    build: Dockerfiles/Stun/.
+    build:
+      dockerfile: ./Dockerfiles/Stun/Dockerfile
+      context: ./
     links:
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
   dht_seed_1:
-    build: Dockerfiles/DHT/.
+    build:
+      dockerfile: ./Dockerfiles/DHT/Dockerfile
+      context: ./
 
   dht_seed_2:
-    build: Dockerfiles/DHT/.
+    build:
+      dockerfile: ./Dockerfiles/DHT/Dockerfile
+      context: ./
 
   proxy_server_1:
-    build: Dockerfiles/Proxy-Server/.
+    build:
+      dockerfile: ./Dockerfiles/Proxy-Server/Dockerfile
+      context: ./
     links:
       - "identity-server:is"
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
   proxy_server_2:
-    build: Dockerfiles/Proxy-Server/.
+    build:
+      dockerfile: ./Dockerfiles/Proxy-Server/Dockerfile
+      context: ./
     links:
       - "identity-server:is"
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
   supplier_1:
-    build: Dockerfiles/Supplier_1/.
+    build:
+      dockerfile: ./Dockerfiles/Supplier_1/Dockerfile
+      context: ./
     links:
       - "identity-server:is"
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
   supplier_2:
-    build: Dockerfiles/Supplier_2/.
+    build:
+      dockerfile: ./Dockerfiles/Supplier_2/Dockerfile
+      context: ./
     links:
       - "identity-server:is"
       - "dht_seed_1:dht_seed_1"
@@ -47,6 +62,7 @@ services:
   #: test unit
   test:
     build: Dockerfiles/Test/.
+#      context: ./
     links:
       - "supplier_1:supplier_1"
       - "supplier_2:supplier_2"
