@@ -24,8 +24,10 @@ def supplier_1_init(timeout_before_tests_to_activate_bitdust):
     for i in range(5):
         response = requests.get('http://supplier_1:8180/network/connected/v1?wait_timeout=5')
         if response.json()['status'] == 'OK':
+            print("supplier_1_init: got status OK")
             break
 
+        print("supplier_1_init: sleep 1 sec")
         time.sleep(1)
     else:
         assert False
@@ -44,8 +46,10 @@ def supplier_2_init(timeout_before_tests_to_activate_bitdust):
     for i in range(5):
         response = requests.get('http://supplier_2:8180/network/connected/v1?wait_timeout=5')
         if response.json()['status'] == 'OK':
+            print("supplier_2_init: got status OK")
             break
 
+        print("supplier_2_init: sleep 1 sec")
         time.sleep(1)
     else:
         assert False
@@ -64,8 +68,10 @@ def proxy_server_1_init(timeout_before_tests_to_activate_bitdust):
     for i in range(5):
         response = requests.get('http://proxy_server_1:8180/network/connected/v1?wait_timeout=5')
         if response.json()['status'] == 'OK':
+            print("proxy_server_1_init: got status OK")
             break
 
+        print("proxy_server_1_init: sleep 1 sec")
         time.sleep(1)
     else:
         assert False
@@ -84,8 +90,10 @@ def proxy_server_2_init(timeout_before_tests_to_activate_bitdust):
     for i in range(5):
         response = requests.get('http://proxy_server_2:8180/network/connected/v1?wait_timeout=5')
         if response.json()['status'] == 'OK':
+            print("proxy_server_2_init: got status OK")
             break
 
+        print("proxy_server_2_init: sleep 1 sec")
         time.sleep(1)
     else:
         assert False

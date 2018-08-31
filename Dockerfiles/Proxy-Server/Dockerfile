@@ -3,7 +3,7 @@ FROM python:2.7.15
 RUN apt-get install -y git
 
 #ADD https://api.github.com/repos/StasEvseev/devel/git/refs/heads/master version.json
-RUN git clone https://github.com/StasEvseev/devel.git bitdust
+RUN git clone https://github.com/bitdust-io/devel.git bitdust
 
 WORKDIR bitdust
 RUN python bitdust.py install
@@ -17,6 +17,9 @@ RUN bitdust set services/entangled-dht/known-nodes "dht_seed_1:14441, dht_seed_2
 RUN bitdust set services/proxy-server/enabled true
 
 RUN bitdust set services/proxy-transport/enabled false
+RUN bitdust set services/customer/enabled false
+RUN bitdust set services/supplier/enabled false
+
 #RUN bitdust set services/p2p-notifications/enabled false
 
 ENTRYPOINT ["bitdust"]

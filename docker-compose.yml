@@ -31,14 +31,14 @@ services:
       - "dht_seed_2:dht_seed_2"
 
   supplier_1:
-    build: Dockerfiles/Node/.
+    build: Dockerfiles/Supplier_1/.
     links:
       - "identity-server:is"
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
   supplier_2:
-    build: Dockerfiles/Node/.
+    build: Dockerfiles/Supplier_2/.
     links:
       - "identity-server:is"
       - "dht_seed_1:dht_seed_1"

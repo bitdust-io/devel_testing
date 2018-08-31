@@ -3,7 +3,7 @@ FROM python:2.7.15
 RUN apt-get install -y git
 
 #ADD https://api.github.com/repos/StasEvseev/devel/git/refs/heads/master version.json
-RUN git clone https://github.com/StasEvseev/devel.git bitdust
+RUN git clone https://github.com/bitdust-io/devel.git bitdust
 
 WORKDIR bitdust
 RUN python bitdust.py install
