@@ -59,11 +59,31 @@ services:
       - "dht_seed_1:dht_seed_1"
       - "dht_seed_2:dht_seed_2"
 
+  customer_1:
+    build:
+      dockerfile: ./Dockerfiles/Customer_1/Dockerfile
+      context: ./
+    links:
+      - "identity-server:is"
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+    volumes:
+      - app-volume:/volume
+      - download_volume:/download_volume
+
   #: test unit
   test:
     build: Dockerfiles/Test/.
     links:
       - "supplier_1:supplier_1"
       - "supplier_2:supplier_2"
+      - "customer_1:customer_1"
       - "proxy_server_1:proxy_server_1"
       - "proxy_server_2:proxy_server_2"
+    volumes:
+      - app-volume:/volume
+      - download_volume:/download_volume
+
+volumes:
+     app-volume:
+     download_volume:
