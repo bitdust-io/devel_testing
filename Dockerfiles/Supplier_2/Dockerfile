@@ -1,7 +1,5 @@
 FROM python:2.7.15
 
-#RUN apt-get install -y git
-
 COPY src/bitdust bitdust
 
 WORKDIR bitdust

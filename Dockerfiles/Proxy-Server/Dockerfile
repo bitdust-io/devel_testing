@@ -1,10 +1,5 @@
 FROM python:2.7.15
 
-#RUN apt-get install -y git
-
-#ADD https://api.github.com/repos/StasEvseev/devel/git/refs/heads/master version.json
-#RUN echo $RANDOM
-#RUN git clone https://github.com/bitdust-io/devel.git bitdust --progress
 COPY src/bitdust bitdust
 
 WORKDIR bitdust
@@ -22,7 +17,5 @@ RUN bitdust set services/proxy-server/enabled true
 RUN bitdust set services/proxy-transport/enabled false
 RUN bitdust set services/customer/enabled false
 RUN bitdust set services/supplier/enabled false
-
-#RUN bitdust set services/p2p-notifications/enabled false
 
 ENTRYPOINT ["bitdust"]
