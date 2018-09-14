@@ -1,7 +1,7 @@
 FROM python:2.7.15
 
 COPY src/bitdust bitdust
-COPY Dockerfiles/Customer_1/file.txt /volume/file_customer_1.txt
+COPY Dockerfiles/Customer_2/file.txt /volume/file_customer_2.txt
 
 WORKDIR bitdust
 RUN python bitdust.py install

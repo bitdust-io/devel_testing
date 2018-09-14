@@ -71,6 +71,18 @@ services:
       - app-volume:/volume
       - download_volume:/download_volume
 
+  customer_2:
+    build:
+      dockerfile: ./Dockerfiles/Customer_2/Dockerfile
+      context: ./
+    links:
+      - "identity-server:is"
+      - "dht_seed_1:dht_seed_1"
+      - "dht_seed_2:dht_seed_2"
+    volumes:
+      - app-volume:/volume
+      - download_volume:/download_volume
+
   #: test unit
   test:
     build: Dockerfiles/Test/.
@@ -78,6 +90,7 @@ services:
       - "supplier_1:supplier_1"
       - "supplier_2:supplier_2"
       - "customer_1:customer_1"
+      - "customer_2:customer_2"
       - "proxy_server_1:proxy_server_1"
       - "proxy_server_2:proxy_server_2"
     volumes:

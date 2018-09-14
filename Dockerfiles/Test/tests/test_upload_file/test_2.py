@@ -1,15 +1,11 @@
 import time
+import os
+import hashlib as hash
 
 import requests
 
-import os
-
-file_path = os.path.join('volume' 'file.txt')
-
 
 def get_hash(path):
-    import hashlib as hash
-
     # Specify how many bytes of the file you want to open at a time
     BLOCKSIZE = 65536
 
@@ -23,9 +19,9 @@ def get_hash(path):
     return sha.hexdigest()
 
 
-def test_customer_1_upload_file():
+def test_customer_1_upload_download_file_with_master():
     shared_volume = '/volume'
-    origin_filename = 'file.txt'
+    origin_filename = 'file_customer_1.txt'
 
     directory_local_file = '%s/%s' % (shared_volume, origin_filename)
 
@@ -37,6 +33,8 @@ def test_customer_1_upload_file():
     download_volume = '/download_volume'
 
     directory_dowloaded_file = '%s/%s' % (download_volume, virtual_file)
+
+    assert not os.path.exists(directory_dowloaded_file)
 
     response = requests.post('http://customer_1:8180/file/create/v1', json={'remote_path': remote_path})
     assert response.status_code == 200
